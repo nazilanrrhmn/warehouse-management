@@ -29,7 +29,7 @@ class CustomerController extends Controller
 
         Customer::create($request->all());
 
-        return redirect()->route('customers.index');
+        return redirect()->route('customers.index')->with('success', 'Customer successfully added!');
     }
 
     public function edit(Customer $customer)
@@ -48,13 +48,13 @@ class CustomerController extends Controller
 
         $customer->update($request->all());
 
-        return redirect()->route('customers.index');
+        return redirect()->route('customers.index')->with('success', 'Customer updated successfully!');
     }
 
     public function destroy(Customer $customer)
     {
         $customer->delete();
 
-        return redirect()->route('customers.index');
+        return redirect()->route('customers.index')->with('success', 'Customer deleted successfully!');
     }
 }

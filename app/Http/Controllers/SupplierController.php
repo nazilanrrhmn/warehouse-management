@@ -29,7 +29,7 @@ class SupplierController extends Controller
 
         Supplier::create($request->all());
 
-        return redirect()->route('suppliers.index');
+        return redirect()->route('suppliers.index')->with('success', 'Supplier successfully added!');
     }
 
     public function edit(Supplier $supplier)
@@ -59,6 +59,6 @@ class SupplierController extends Controller
     {
         $supplier->delete();
 
-        return redirect()->route('suppliers.index');
+        return redirect()->route('suppliers.index')->with('success', 'Supplier deleted successfully.');
     }
 }

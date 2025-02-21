@@ -27,11 +27,13 @@
                                 <option value=""> Select Product </option>
                                 @foreach ($products as $product)
                                     <option value="{{ $product->id }}"
-                                        {{ old('supplier_id') == $product->id ? 'selected' : '' }}>
+                                        data-supplier-id="{{ $product->supplier->id ?? '' }}"
+                                        data-supplier-name="{{ $product->supplier->name ?? '' }}">
                                         {{ $product->name }}
                                     </option>
                                 @endforeach
                             </select>
+
                         </div>
                         @error('supplier_id')
                             <p class="text-sm text-red-600">{{ $message }}</p>
@@ -43,16 +45,14 @@
                     <div class="sm:col-span-2">
                         <label for="supplier_id" class="block text-sm font-medium text-gray-900">Supplier</label>
                         <div class="mt-2">
-                            <select name="supplier_id" id="supplier_id" required
-                                class="block w-full rounded-md bg-white px-3 py-1.5 text-gray-900 outline-gray-300 focus:outline-gray-600 sm:text-sm">
+                            <select id="supplier_id" disabled
+                                class="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-gray-900 outline-gray-300 focus:outline-gray-600 sm:text-sm">
                                 <option value=""> Select Supplier </option>
-                                @foreach ($suppliers as $supplier)
-                                    <option value="{{ $supplier->id }}"
-                                        {{ old('supplier_id') == $supplier->id ? 'selected' : '' }}>
-                                        {{ $supplier->name }}
-                                    </option>
-                                @endforeach
                             </select>
+
+                            <!-- Hidden Input untuk Mengirim Nilai Supplier -->
+                            <input type="hidden" name="supplier_id" id="supplier_hidden">
+
                         </div>
                         @error('supplier_id')
                             <p class="text-sm text-red-600">{{ $message }}</p>
@@ -84,6 +84,28 @@
                 Product</button>
         </div>
     </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const productDropdown = document.getElementById('product_id');
+            const supplierDropdown = document.getElementById('supplier_id');
+            const supplierHiddenInput = document.getElementById('supplier_hidden');
+
+            productDropdown.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                const supplierId = selectedOption.getAttribute('data-supplier-id');
+                const supplierName = selectedOption.getAttribute('data-supplier-name');
+
+                // Update dropdown supplier (untuk tampilan)
+                supplierDropdown.innerHTML =
+                    `<option value="${supplierId}" selected>${supplierName}</option>`;
+
+                // Set hidden input (agar nilai dikirim ke backend)
+                supplierHiddenInput.value = supplierId;
+            });
+        });
+    </script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>

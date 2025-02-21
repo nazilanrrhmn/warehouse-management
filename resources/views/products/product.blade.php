@@ -53,6 +53,27 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Alert sukses jika ada session success
+            @if (session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            @endif
+
+            // Alert error jika terjadi validasi gagal
+            @if ($errors->any())
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error',
+                    html: `{!! implode('<br>', $errors->all()) !!}`,
+                });
+            @endif
+
+            // Konfirmasi sebelum menghapus produk
             const deleteButtons = document.querySelectorAll('.delete-button');
 
             deleteButtons.forEach(button => {
@@ -75,4 +96,5 @@
             });
         });
     </script>
+
 </x-layout>

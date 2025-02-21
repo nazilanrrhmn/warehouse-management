@@ -35,6 +35,7 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric',
             'stock' => 'required|integer',
+            'supplier_id' => 'required|integer',
         ]);
 
         Product::create($request->all());
@@ -55,7 +56,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('products.edit', ['title' => 'Edit Product', 'product' => $product]);
+        return view('products.edit', ['title' => 'Edit Product', 'product' => $product, 'suppliers' => Supplier::all()]);
     }
 
     /**
@@ -68,6 +69,7 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric',
             'stock' => 'required|integer',
+            'supplier_id' => 'required|integer',
         ]);
 
         $product->update($request->all());

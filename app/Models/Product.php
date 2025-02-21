@@ -10,11 +10,16 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'price', 'stock', 'description'];
+    protected $fillable = ['name', 'price', 'stock', 'description', 'supplier_id'];
 
     public function stockTransactions()
     {
         return $this->hasMany(StockTransactions::class);
+    }
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
     }
 
     public function updateStock($quantity, $type)

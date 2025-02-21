@@ -50,6 +50,17 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Cek apakah ada session sukses dari Laravel
+            @if (session('success'))
+                Swal.fire({
+                    title: 'Success!',
+                    text: "{{ session('success') }}",
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            @endif
+
+            // Tambahkan event listener untuk tombol delete
             const deleteButtons = document.querySelectorAll('.delete-button');
 
             deleteButtons.forEach(button => {
@@ -72,4 +83,5 @@
             });
         });
     </script>
+
 </x-layout>
