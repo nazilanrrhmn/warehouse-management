@@ -46,7 +46,6 @@ class PurchaseController extends Controller
     {
         $product = $purchase->product;
 
-        // Kurangi stok produk setelah penghapusan pembelian
         $product->stock -= $purchase->quantity;
         $product->save();
 

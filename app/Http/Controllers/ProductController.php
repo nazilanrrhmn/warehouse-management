@@ -8,26 +8,17 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $products = Product::all();
         return view('products.product', ['title' => 'Product List', 'products' => $products]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('products.create', ['title' => 'Create Product', 'suppliers' => Supplier::all()]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -43,25 +34,16 @@ class ProductController extends Controller
         dd($request->all());
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Product $product)
     {
         return view('product.show', ['title' => 'Product Details', 'product' => $product]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Product $product)
     {
         return view('products.edit', ['title' => 'Edit Product', 'product' => $product, 'suppliers' => Supplier::all()]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Product $product)
     {
         $request->validate([
@@ -76,9 +58,6 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Product updated successfully!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Product $product)
     {
         $product->delete();
